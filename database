@@ -1,0 +1,82 @@
+-- create the students table to store basic student information
+create table students (
+    student_id int primary key,
+    first_name varchar(50),
+    last_name varchar(50),
+    dob date,
+    address varchar(100),
+    contact_number varchar(15)
+);
+
+-- create the instructors table to store instructor details
+create table instructors (
+    instructor_id int primary key,
+    first_name varchar(50),
+    last_name varchar(50),
+    department varchar(50),
+    contact_number varchar(15)
+);
+
+-- create the courses table to store course details
+create table courses (
+    course_id int primary key,
+    course_name varchar(100),
+    credit_hours int,
+    department varchar(50),
+    instructor_id int,
+    foreign key (instructor_id) references instructors(instructor_id)
+);
+
+-- create the enrollments table to store which students are enrolled in which courses
+create table enrollments (
+    enrollment_id int primary key,
+    student_id int,
+    course_id int,
+    semester varchar(20),
+    year int,
+    foreign key (student_id) references students(student_id),
+    foreign key (course_id) references courses(course_id)
+);
+
+-- create the grades table to store student grades in various courses
+create table grades (
+    grade_id int primary key,
+    student_id int,
+    course_id int,
+    grade char(2),
+    semester varchar(20),
+    year int,
+    foreign key (student_id) references students(student_id),
+    foreign key (course_id) references courses(course_id)
+);
+
+-- insert sample student data into the students table
+insert into students (student_id, first_name, last_name, dob, address, contact_number) values
+(1, 'john', 'doe', '2000-06-15', '123 maple st', '555-1234'),
+(2, 'jane', 'smith', '2001-08-22', '456 oak st', '555-5678'),
+(3, 'emily', 'jones', '2000-11-05', '789 pine st', '555-9876');
+
+-- insert sample instructor data into the instructors table
+insert into instructors (instructor_id, first_name, last_name, department, contact_number) values
+(1, 'sarah', 'brown', 'computer science', '555-6543'),
+(2, 'mark', 'wilson', 'mathematics', '555-3210');
+
+-- insert sample course data into the courses table
+insert into courses (course_id, course_name, credit_hours, department, instructor_id) values
+(1, 'introduction to databases', 3, 'computer science', 1),
+(2, 'linear algebra', 4, 'mathematics', 2),
+(3, 'operating systems', 3, 'computer science', 1);
+
+-- insert sample enrollment data into the enrollments table
+insert into enrollments (enrollment_id, student_id, course_id, semester, year) values
+(1, 1, 1, 'first', 2024),
+(2, 1, 2, 'first', 2024),
+(3, 2, 1, 'first', 2024),
+(4, 3, 3, 'first', 2024);
+
+-- insert sample grade data into the grades table
+insert into grades (grade_id, student_id, course_id, grade, semester, year) values
+(1, 1, 1, 'A', 'first', 2024),
+(2, 1, 2, 'B+', 'first', 2024),
+(3, 2, 1, 'A-', 'first', 2024),
+(4, 3, 3, 'B', 'first', 2024);
